@@ -28,6 +28,7 @@ router
   .route("/followUser/:id")
   .post(userController.followUser)
   .delete(userController.unfollowUser);
+  
 router
   .route("/followShop/:id")
   .post(userController.followShop)

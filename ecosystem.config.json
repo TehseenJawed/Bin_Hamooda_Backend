@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "binHamooda ",
+    "name": "binHamooda",
     "script": "src/index.js",
     "instances": 1,
     "autorestart": true,

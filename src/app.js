@@ -11,8 +11,12 @@ const ApiError = require("./utils/APIError");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const morgan = require("./config/morgan");
 const path = require("path");
-const http = require("http");
-const serverless = require("serverless-http");
+
+const schedule = require("node-schedule");
+
+schedule.scheduleJob("5 * * * *", () => {
+  console.log("much wow");
+});
 
 const app = express();
 
@@ -33,8 +37,10 @@ app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "client", "build")));
 app.options("*", cors());
 
+app.use("/api", routes);
+
 app.use("/assets", express.static(path.join(__dirname, path.join("uploads"))));
-app.use("/api`", routes);
+
 // app.get("/*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
@@ -43,15 +49,7 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 });
 
-// const server = http.createServer(app);
-
-
-// io.on("connection", (socket) => {
-//   socket.emit("hello World");
-// });
-
 app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
-// module.exports.handler = serverless(app);
