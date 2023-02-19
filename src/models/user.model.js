@@ -52,6 +52,9 @@ const userSchema = mongoose.Schema(
       type: String, 
       required: false
     },
+    token: {
+      type: String
+    },
     // followers: [
     //   {
     //     type: mongoose.Schema.Types.ObjectId,

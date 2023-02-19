@@ -12,6 +12,8 @@ const { errorConverter, errorHandler } = require("./middlewares/error");
 const morgan = require("./config/morgan");
 const path = require("path");
 const http = require("http");
+const serverless = require("serverless-http");
+
 const app = express();
 
 if (config.env !== "test") {
@@ -32,8 +34,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.options("*", cors());
 
 app.use("/assets", express.static(path.join(__dirname, path.join("uploads"))));
-app.use("/api", routes);
-
+app.use("/api`", routes);
 // app.get("/*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
@@ -53,3 +54,4 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
+// module.exports.handler = serverless(app);

@@ -1,2 +1,5 @@
 node_modules
 src/uploads
+functions
+# Local Netlify folder
+.netlify

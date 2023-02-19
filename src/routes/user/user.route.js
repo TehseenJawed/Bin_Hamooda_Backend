@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { userController } = require("../../controllers");
-const verify = require("../../middlewares/auth");
+const auth = require("../../middlewares/auth");
 const validate = require("../../middlewares/validate");
 const userValidation = require("../../validations/user.validation");
 const upload = require("../../middlewares/upload");
@@ -11,6 +11,18 @@ router
   .route("/")
   .post(upload.single("profilePicture"), validate(userValidation.createUser), userController.createUser)
   .get(userController.getAllUser);
+
+router
+  .route("/request-otp")
+  .post(userController.verifyUserEmail);
+
+router
+  .route("/verify-otp")
+  .post(userController.changePassword);
+
+router
+  .route("/changepassword/:id")
+  .patch(auth(), userController.updatePassword);
 
 router
   .route("/followUser/:id")

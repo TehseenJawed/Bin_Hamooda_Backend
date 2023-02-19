@@ -1,6 +1,6 @@
-const { User } = require("../models/");
+const { User } = require("../models");
 const { v4: uuidv4 } = require("uuid");
-const { userService, chatService, vendorService } = require("../services/");
+const { userService, chatService, vendorService } = require("../services");
 
 class WebSockets {
   connection(client) {

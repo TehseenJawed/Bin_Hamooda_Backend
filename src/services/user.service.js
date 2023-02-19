@@ -2,6 +2,11 @@ const httpStatus = require("http-status");
 const vendorService = require("./vendor.service");
 const { User, Vendor, Chat } = require("../models");
 const ApiError = require("../utils/APIError");
+const mailService = require("./mail.service");
+const moment = require("moment");
+const config = require("../config/config");
+const { tokenTypes } = require("../config/tokens");
+const jwt = require("jsonwebtoken");
 
 /**
  * Create a user
@@ -23,6 +28,136 @@ const createUser = async (req) => {
   req.body.profilePicture = req.file.filename;
   const user = await User.create(req.body);
   return user;
+};
+
+const verifyUserEmail = async (body) => {
+  let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (body.email.match(regexEmail)) {
+    const user = await getUserByEmail(body.email);
+
+    if (!user) {
+      throw new ApiError(httpStatus.NOT_FOUND, "invalid user email");
+
+    } else {
+      const otp = Date.now().toString().slice(-6);
+      const temp = await User.findByIdAndUpdate(
+        user.id,
+        {
+          token: otp,
+        },
+        { new: true }
+      );
+
+      mailService.sendMailThroughMailgun({ email: user.email, token: otp });
+      return "OTP sent to your Email";
+    }
+
+  }
+};
+
+const checkOTP = async (otp) => {
+  const user = await User.findOne({ token: otp });
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "wrong otp");
+  }
+  const diffInMinutes = moment().diff(moment(user.updatedAt), "minutes");
+
+  if (diffInMinutes > 5) {
+    throw new ApiError(
+      httpStatus.ACCEPTED,
+      "the OTP you sent has been expired"
+    );
+  }
+  return user;
+};
+
+const generateToken = (
+  userId,
+  userRole,
+  expires,
+  type,
+  secret = config.jwt.secret
+) => {
+  const payload = {
+    sub: userId,
+    role: userRole,
+    iat: moment().unix(),
+    exp: expires.unix(),
+    type,
+  };
+  return jwt.sign(payload, secret);
+};
+
+const generateAuthTokens = async (user) => {
+  const accessTokenExpires = moment().add(
+    config.jwt.accessExpirationMinutes,
+    "minutes"
+  );
+
+  const accessToken = generateToken(
+    user.id,
+    user.role,
+    accessTokenExpires,
+    tokenTypes.ACCESS
+  );
+
+  const refreshTokenExpires = moment().add(
+    config.jwt.refreshExpirationDays,
+    "days"
+  );
+
+  const refreshToken = generateToken(
+    user.id,
+    user.role,
+    refreshTokenExpires,
+    tokenTypes.REFRESH
+  );
+
+  return {
+    access: {
+      token: accessToken,
+      expires: accessTokenExpires.toDate(),
+    },
+    refresh: {
+      token: refreshToken,
+      expires: refreshTokenExpires.toDate(),
+    },
+  };
+};
+
+const updatePassword = async (userId, updateBody) => {
+  console.log(" -------->>>   ", updateBody)
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+  // updateBody.password = await bcrypt.hash(user.password, 8);
+  // console.log(userId, user)
+  Object.assign(user, updateBody);
+  await user.save();
+  console.log("USER .....",user)
+  return user;
+  // const newuser = await User.findByIdAndUpdate(user.id, updateBody, { new: true })
+  // console.log(newuser, "<== updaated Us er")
+  // return newuser;
+};
+
+const getUserByEmail = async (email, otp) => {
+  // const temp = await User.findByIdAndUpdate(
+  //   user.id,
+  //   {
+  //     token: otp,
+  //   },
+  //   { new: true }
+  // );
+  return User.findOneAndUpdate(
+    { email },
+    {
+      token: otp
+    },
+    { new: true }
+  )
+
 };
 
 const createUserByGoogleId = async (body) => {
@@ -300,6 +435,11 @@ const getUserByIdForChat = async (options, id) => {
 module.exports = {
   createUser,
   queryUsers,
+  getUserByEmail,
+  verifyUserEmail,
+  checkOTP,
+  generateAuthTokens,
+  updatePassword,
   getAllUsers,
   getUserById,
   getUserByPhone,

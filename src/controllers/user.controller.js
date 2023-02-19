@@ -37,6 +37,22 @@ const getAllUser = catchAsync(async (req, res) => {
   res.status(200).send(user);
 });
 
+const verifyUserEmail = catchAsync(async (req, res) => {
+  const user = await userService.verifyUserEmail(req.body);
+  res.status(200).send(user);
+});
+
+const changePassword = catchAsync(async (req, res) => {
+  const user = await userService.checkOTP(req.body.otp);
+  const tokens = await userService.generateAuthTokens(user);
+  res.status(httpStatus.ACCEPTED).send({ user, tokens });
+});
+
+const updatePassword = catchAsync(async (req, res) => {
+  const user = await userService.updatePassword(req.params.id, req.body);
+  res.status(200).send(user);
+});
+
 const updateUserById = catchAsync(async (req, res) => {
   const user = await userService.updateUserById(req.params.id, req);
   res.status(200).send(user);
@@ -72,4 +88,7 @@ module.exports = {
   unfollowUser,
   followShop,
   unfollowShop,
+  verifyUserEmail,
+  changePassword,
+  updatePassword
 };
