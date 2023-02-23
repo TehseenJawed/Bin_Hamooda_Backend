@@ -1,5 +1,5 @@
 const httpStatus = require("http-status");
-const vendorService = require("./vendor.service");
+const vendorService = require("./model.service");
 const { User, Vendor, Chat } = require("../models");
 const ApiError = require("../utils/APIError");
 const mailService = require("./mail.service");

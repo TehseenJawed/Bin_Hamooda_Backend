@@ -8,8 +8,8 @@ const catchAsync = require("../utils/catchAsync");
 
 const login = catchAsync(async (req, res, next) => {
   console.log('IT IS BODY ---  ',req.body);
-  const { phone, password } = req.body;
-  const user = await authService.loginUserWithPhoneAndPassword(phone, password);
+  const { email, password } = req.body;
+  const user = await authService.loginUserWithPhoneAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
   // let deviceToken;
   // const checkToken =

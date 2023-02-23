@@ -1,6 +1,6 @@
 const httpStatus = require("http-status");
 const userService = require("./user.service");
-const vendorService = require("./vendor.service");
+const vendorService = require("./model.service");
 const config = require("../config/config");
 const { OAuth2Client } = require("google-auth-library");
 const ApiError = require("../utils/APIError");
@@ -10,16 +10,16 @@ const ApiError = require("../utils/APIError");
  * @param {string} password
  * @returns {Promise<User>}
  */
-const loginUserWithPhoneAndPassword = async (phone, password) => {
-  const user = await userService.getUserByPhone(phone);
+const loginUserWithPhoneAndPassword = async (email, password) => {
+  const user = await userService.getUserByEmail(email);
   if (!user) {
     throw new ApiError(
       httpStatus.UNAUTHORIZED,
-      "Incorrect phone number or password"
+      "Incorrect email address or password"
     );
   }
   if (!user || !(await user.isPasswordMatch(password))) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect phone number or password");
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email address or password");
   }
   console.log("user logged in");
   return user;
