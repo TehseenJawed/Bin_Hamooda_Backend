@@ -20,7 +20,13 @@ const createBrand = async (body) => {
   const subCategory = await Brand.create(body);
   return subCategory;
 };
+
+const getAllBrand = async () => {
+  const result = await Brand.find()
+  return result
+}
 module.exports = {
   createBrand,
   queryBrand,
+  getAllBrand
 };

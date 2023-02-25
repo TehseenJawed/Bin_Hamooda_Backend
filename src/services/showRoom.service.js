@@ -21,7 +21,13 @@ const createShowRoom = async (body) => {
   const showRoom = await ShowRoom.create(body);
   return showRoom;
 };
+
+const getAllShowRoom = async () => {
+  const showRoom = await ShowRoom.find();
+  return showRoom
+}
 module.exports = {
   createShowRoom,
   queryShowRoom,
+  getAllShowRoom
 };

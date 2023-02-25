@@ -32,6 +32,11 @@ const getModel = async (filters, options, populateFirst = null) => {
   return vendor;
 };
 
+const getAllModel = async () => {
+  const user = await Model.find();
+  return user;
+};
+
 const getModelByName = async (name) => {
   return await Model.findOne({ name });
 };
@@ -39,5 +44,6 @@ const getModelByName = async (name) => {
 module.exports = {
   getModelByName,
   createModel,
-  getModel
+  getModel,
+  getAllModel
 };

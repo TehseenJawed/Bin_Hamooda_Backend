@@ -1,26 +1,19 @@
 const mongoose = require("mongoose");
 const { toJSON, paginate } = require("./plugins");
 const productSchema = mongoose.Schema({
-  shopId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "vendor",
-    required: true,
-  },
-  brandName: { type: String, required: true },
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "category",
-    required: true,
-  },
-  guarantee: { type: String, required: true },
-  deliveryPrice: { type: String, required: true },
-  productCondition: [
+  title: { type: String, required: true },
+  demand: { type: String, required: true },
+  engine: { type: String, required: true },
+  exterior_color: { type: String, required: true },
+  fuel_type: { type: String, required: true },
+  year: { type: String, required: true },
+  doors: { type: String, required: true },
+  interior_color: { type: String, required: true },
+  images: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product_condition",
-      required: true,
+      type: String,
+      required: false,
+      trim: true,
     },
   ],
 });

@@ -8,8 +8,8 @@ const { getUser } = require("../validations/user.validation");
 
 const createFormQuries = catchAsync(async (req, res) => {
   console.log('REQ -------  ',req.body);
-  const user = await formQueryService.createQuery(req.body);
-  res.status(httpStatus.CREATED).send({ user });
+  const response = await formQueryService.createQuery(req.body);
+  res.status(httpStatus.CREATED).send(response);
 });
 
 module.exports = {

@@ -34,10 +34,12 @@ const productSchema = mongoose.Schema({
   km_driven: { type: String, required: false},
   enquiry_date: {type: String, required: false},
   enquiry_time: {type: String, required: false},
+  model_year: {type: String, required: false},
   air_filter: {type: String, required: false},
   exterior_color: {type: String, required: false},
   interior_color: { type: String, required: false},
   upload_pictures: { type: String, required: false},
+  vehicle_condition: { type: String, required: false},
   terms_n_conditions: {type: String},
   receiveInformation: {type: String},
 });

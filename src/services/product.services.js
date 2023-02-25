@@ -1,5 +1,5 @@
 const httpStatus = require("http-status");
-const { Product, Vendor } = require("../models");
+const { Product } = require("../models");
 const { findByIdAndUpdate, create } = require("../models/user.model");
 const ApiError = require("../utils/APIError");
 const mongoose = require("mongoose");

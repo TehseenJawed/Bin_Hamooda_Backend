@@ -1,12 +1,11 @@
 module.exports.userController = require("./user.controller");
-module.exports.productController = require("./product.controller");
 module.exports.modelController = require("./model.controller");
 module.exports.addressDetailsController = require("./addressDetail.controller");
 module.exports.paymentDetailsController = require("./paymentDetail.controller");
 module.exports.authController = require("./auth.controller");
 module.exports.showroomController = require("./showroom.controller");
 module.exports.reviewController = require("./review.controller");
-module.exports.commentController = require("./comment.controller");
+module.exports.productController = require("./product.controller");
 module.exports.postController = require("./post.controller");
 module.exports.replyController = require("./reply.controller");
 module.exports.productCondtionController = require("./productCondtion.controller");

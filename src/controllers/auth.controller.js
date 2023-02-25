@@ -2,6 +2,10 @@ const httpStatus = require("http-status");
 const {
   authService,
   tokenService,
+  productService,
+  modelService,
+  brandService,
+  showRoom,
   notificationTokenService,
 } = require("../services");
 const catchAsync = require("../utils/catchAsync");
@@ -11,6 +15,10 @@ const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithPhoneAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
+  const product = await productService.getAllProducts();
+  const model = await modelService.getAllModel();
+  const brand = await brandService.getAllBrand();
+  const showroom = await showRoom.getAllShowRoom();
   // let deviceToken;
   // const checkToken =
   //   await notificationTokenService.getNotificationTokenByUserId(user.id);
@@ -34,7 +42,7 @@ const login = catchAsync(async (req, res, next) => {
   //     );
   //   res.send({ user, tokens, deviceToken });
   // }
-  res.send({ user, tokens });
+  res.send({ user, tokens, product, model, brand, showroom });
 });
 
 const signup = catchAsync(async (req, res, next) => {

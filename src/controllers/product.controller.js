@@ -6,50 +6,50 @@ const pick = require("../utils/pick");
 
 const getProducts = catchAsync(async (req, res) => {
   console.log("wow");
-  const filters = pick(req.query, ["shopId", "name", "category"]);
+  const filters = pick(req.query, [""]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await productService.queryProducts(filters, options);
   res.send(result);
 });
-const getAllProducts = catchAsync(async (req, res) => {
-  let product = await productService.getAllProducts();
-  res.status(200).send(product);
-});
+// const getAllProducts = catchAsync(async (req, res) => {
+//   let product = await productService.getAllProducts();
+//   res.status(200).send(product);
+// });
 
-const getProduct = catchAsync(async (req, res) => {
-  const result = await productService.getProductById(req.params.id);
-  res.send(result);
-});
+// const getProduct = catchAsync(async (req, res) => {
+//   const result = await productService.getProductById(req.params.id);
+//   res.send(result);
+// });
 const createProduct = catchAsync(async (req, res) => {
   const result = await productService.createProduct(req.body);
   res.send(result).status(httpStatus.CREATED);
 });
-const updateProduct = catchAsync(async (req, res) => {
-  const result = await productService.updateProduct(req.params.id, req.body);
-  res.send(result);
-});
-const deleteProduct = catchAsync(async (req, res) => {
-  const product = await productService.deleteProductById(req.params.id);
-  res.send(product);
-});
+// const updateProduct = catchAsync(async (req, res) => {
+//   const result = await productService.updateProduct(req.params.id, req.body);
+//   res.send(result);
+// });
+// const deleteProduct = catchAsync(async (req, res) => {
+//   const product = await productService.deleteProductById(req.params.id);
+//   res.send(product);
+// });
 
-const getProductCondition = catchAsync(async (req, res) => {
-  console.log(req.query, "<====req.query");
-  if (!req.query.productId && !req.query.colourID && !req.query.size) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "data is missing");
-  }
-  const result = await productService.getProductConditionByColorAndSize(
-    req.query
-  );
-  res.status(httpStatus.ACCEPTED).send(result);
-});
+// const getProductCondition = catchAsync(async (req, res) => {
+//   console.log(req.query, "<====req.query");
+//   if (!req.query.productId && !req.query.colourID && !req.query.size) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "data is missing");
+//   }
+//   const result = await productService.getProductConditionByColorAndSize(
+//     req.query
+//   );
+//   res.status(httpStatus.ACCEPTED).send(result);
+// });
 
 module.exports = {
   getProducts,
-  getAllProducts,
-  getProduct,
+  // getAllProducts,
+  // getProduct,
   createProduct,
-  updateProduct,
-  deleteProduct,
-  getProductCondition,
+  // updateProduct,
+  // deleteProduct,
+  // getProductCondition,
 };
