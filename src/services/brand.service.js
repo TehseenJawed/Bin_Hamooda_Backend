@@ -25,8 +25,23 @@ const getAllBrand = async () => {
   const result = await Brand.find()
   return result
 }
+
+const getBrandById = async (id) => {
+  return Brand.findById(id);
+};
+
+const deleteBrandById = async (id) => {
+  const product = await getBrandById(id);
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Product not found.");
+  }
+  await product.remove();
+  return product;
+};
+
 module.exports = {
   createBrand,
   queryBrand,
-  getAllBrand
+  getAllBrand,
+  deleteBrandById
 };

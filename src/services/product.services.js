@@ -31,9 +31,10 @@ const updateProductById = async (id, update) => {
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, "Product not found.");
   }
-  Object.assign(product, update);
-  await product.save();
-  return product;
+  return Product.findByIdAndUpdate(
+    id,
+    update
+  )
 };
 const createProduct = async (body) => {
   const product = await Product.create(body);

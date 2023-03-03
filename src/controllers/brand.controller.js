@@ -10,11 +10,22 @@ const getBrands = catchAsync(async (req, res) => {
   res.send(result).status(httpStatus.ACCEPTED);
 });
 const createBrand = catchAsync(async (req, res) => {
-  const result = await brandService.createBrand(req.body);
-  res.status(httpStatus.CREATED).send(result);
+  if (!req.file) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No image or the file type is incorrect. Only PDF or Image are acceptable.");
+  } else {
+    req.body.image = req.file.filename
+    const result = await brandService.createBrand(req.body);
+    res.status(httpStatus.CREATED).send(result);
+  }
+});
+
+const deleteBrand = catchAsync(async (req, res) => {
+  const brand = await brandService.deleteBrandById(req.params.id);
+  res.send(brand);
 });
 
 module.exports = {
   createBrand,
-  getBrands
+  getBrands,
+  deleteBrand
 };

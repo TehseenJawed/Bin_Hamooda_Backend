@@ -5,7 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 const pick = require("../utils/pick");
 
 const getProducts = catchAsync(async (req, res) => {
-  console.log("wow");
+  console.log("wow", req.body);
   const filters = pick(req.query, [""]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await productService.queryProducts(filters, options);
@@ -21,17 +21,37 @@ const getProducts = catchAsync(async (req, res) => {
 //   res.send(result);
 // });
 const createProduct = catchAsync(async (req, res) => {
-  const result = await productService.createProduct(req.body);
-  res.send(result).status(httpStatus.CREATED);
+  if (!req.files) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No image or the file type is incorrect. Only PDF or Image are acceptable.");
+  } else {
+    const images = []
+    console.log(req.body.images);
+    await req.files.map((v, i) => images.push(v.filename))
+    req.body.images = images
+    console.log(req.body);
+    const result = await productService.createProduct(req.body);
+    res.send(result).status(httpStatus.CREATED);
+  }
 });
-// const updateProduct = catchAsync(async (req, res) => {
-//   const result = await productService.updateProduct(req.params.id, req.body);
-//   res.send(result);
-// });
-// const deleteProduct = catchAsync(async (req, res) => {
-//   const product = await productService.deleteProductById(req.params.id);
-//   res.send(product);
-// });
+const updateProduct = catchAsync(async (req, res) => {
+  if (!req.files) {
+    const result = await productService.updateProductById(req.params.id, req.body);
+    res.send(result).status(httpStatus.CREATED);
+  } else {
+    const images = []
+    console.log(req.body.images);
+    await req.files.map((v, i) => images.push(v.filename))
+    req.body.images = images
+    console.log(req.body);
+    const result = await productService.updateProductById(req.params.id, req.body);
+    res.send(result).status(httpStatus.CREATED);
+  }
+  console.log('REQ ------>>> ',req.params.id, req.body);
+});
+const deleteProduct = catchAsync(async (req, res) => {
+  const product = await productService.deleteProductById(req.params.id);
+  res.send(product);
+});
 
 // const getProductCondition = catchAsync(async (req, res) => {
 //   console.log(req.query, "<====req.query");
@@ -49,7 +69,7 @@ module.exports = {
   // getAllProducts,
   // getProduct,
   createProduct,
-  // updateProduct,
-  // deleteProduct,
+  updateProduct,
+  deleteProduct,
   // getProductCondition,
 };

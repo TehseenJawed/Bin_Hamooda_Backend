@@ -8,15 +8,13 @@ const router = Router();
 
 router
   .route("/")
-  .post(
-    brandController.createBrand
-  )
+  .post(upload.single("image"), brandController.createBrand)
   .get(brandController.getBrands);
-// router
-//   .route("/:id")
-//   .get(subCategoryController.getSubCategory)
-//   .delete(subCategoryController.deleteSubCategory)
-//   .put(subCategoryController.updateSubCategory);
+router
+  .route("/:id") 
+  // .get(subCategoryController.getSubCategory)
+  .delete(brandController.deleteBrand)
+  // .put(subCategoryController.updateSubCategory);
 
 module.exports = router;
     

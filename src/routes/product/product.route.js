@@ -8,12 +8,12 @@ const router = Router();
 
 router
   .route("/")
-  .post(productController.createProduct)
+  .post(upload.array("images"), productController.createProduct)
   .get(productController.getProducts);
-// router
-//   .route("/:id")
-//   .get(commentController.getComment)
-//   .delete(commentController.deleteComment)
-//   .put(commentController.updateComment);
+router
+  .route("/:id")
+  // .get(commentController.getComment)
+  .delete(productController.deleteProduct)
+  .patch(upload.array("images"), productController.updateProduct);
 
 module.exports = router;
