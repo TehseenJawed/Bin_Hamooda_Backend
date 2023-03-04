@@ -14,7 +14,7 @@ router
   .route("/:id") 
   // .get(subCategoryController.getSubCategory)
   .delete(brandController.deleteBrand)
-  // .put(subCategoryController.updateSubCategory);
+  .patch(brandController.updateBrand);
 
 module.exports = router;
     

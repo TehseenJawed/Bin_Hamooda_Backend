@@ -39,9 +39,21 @@ const deleteBrandById = async (id) => {
   return product;
 };
 
+const updateBrand = async (id, update) => {
+  const brand = await getBrandById(id);
+  if (!brand) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Brand not found.");
+  }
+  return Brand.findByIdAndUpdate(
+    brand.id,
+    update
+  )
+};
+
 module.exports = {
   createBrand,
   queryBrand,
   getAllBrand,
-  deleteBrandById
+  deleteBrandById,
+  updateBrand,
 };

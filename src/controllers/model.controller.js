@@ -19,8 +19,16 @@ const deleteModel = catchAsync(async (req, res) => {
   const model = await modelService.deleteModel(req.params.id);
   res.status(httpStatus.ACCEPTED).send(model);
 });
+
+const updateModel = catchAsync(async (req, res) => {
+  const result = await modelService.updateModel(req.params.id, req.body);
+  console.log('REQ ------>>> ',req.params.id, req.body);
+  res.send(result).status(httpStatus.CREATED);
+});
+
 module.exports = {
   createModel,
   getModel,
+  updateModel,
   deleteModel,
 };

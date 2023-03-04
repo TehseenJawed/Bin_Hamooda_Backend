@@ -40,9 +40,21 @@ const deleteShowRoom = async (id) => {
   return showroom;
 };
 
+const updateShowRoom = async (id, update) => {
+  const showroom = await getShowRoomById(id);
+  if (!showroom) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Showroom not found.");
+  }
+  return ShowRoom.findByIdAndUpdate(
+    id,
+    update
+  )
+};
+
 module.exports = {
   createShowRoom,
   queryShowRoom,
   getAllShowRoom,
-  deleteShowRoom
+  deleteShowRoom,
+  updateShowRoom,
 };

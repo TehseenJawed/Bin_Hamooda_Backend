@@ -16,7 +16,7 @@ router
   .route("/:id")
 //   .get(categoryController.getCategory)
   .delete(showroomController.deleteShowRoom)
-//   .put(categoryController.updateCategory);
+  .patch(showroomController.updateShowRoom);
 
 module.exports = router;
     

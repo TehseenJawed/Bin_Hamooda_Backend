@@ -20,8 +20,14 @@ const deleteShowRoom = catchAsync(async (req, res) => {
   res.status(httpStatus.ACCEPTED).send(category);
 });
 
+const updateShowRoom = catchAsync(async (req, res) => {
+  const result = await showRoom.updateShowRoom(req.params.id, req.body);
+  res.send(result).status(httpStatus.CREATED);
+});
+
 module.exports = {
   getShowRoom,
   createShowRoom,
-  deleteShowRoom
+  deleteShowRoom,
+  updateShowRoom
 };

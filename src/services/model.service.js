@@ -54,11 +54,23 @@ const deleteModel = async (id) => {
   return model;
 };
 
+const updateModel = async (id, update) => {
+  const product = await getModelById(id);
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Model not found.");
+  }
+  return Model.findByIdAndUpdate(
+    id,
+    update
+  )
+};
+
 module.exports = {
   getModelByName,
   createModel,
   getModel,
   getAllModel,
   deleteModel,
-  getModelById
+  getModelById,
+  updateModel
 };

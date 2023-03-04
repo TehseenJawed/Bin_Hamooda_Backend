@@ -7,9 +7,10 @@ router
   .route("/")
   .get(modelController.getModel)
   .post( modelController.createModel);
-  
+
   router
   .route("/:id")
   .delete(modelController.deleteModel)
+  .patch(modelController.updateModel)
 
 module.exports = router;

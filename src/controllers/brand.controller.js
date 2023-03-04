@@ -24,8 +24,14 @@ const deleteBrand = catchAsync(async (req, res) => {
   res.send(brand);
 });
 
+const updateBrand = catchAsync(async (req, res) => {
+  const brand = await brandService.updateBrand(req.params.id, req.body);
+  res.send(brand).status(httpStatus.CREATED);
+});
+
 module.exports = {
   createBrand,
   getBrands,
-  deleteBrand
+  deleteBrand,
+  updateBrand
 };
