@@ -17,6 +17,10 @@ const queryShowRoom = async (
   return showRoom;
 };
 
+const getShowRoomById = async (id) => {
+  return ShowRoom.findById(id);
+};
+
 const createShowRoom = async (body) => {
   const showRoom = await ShowRoom.create(body);
   return showRoom;
@@ -26,8 +30,19 @@ const getAllShowRoom = async () => {
   const showRoom = await ShowRoom.find();
   return showRoom
 }
+
+const deleteShowRoom = async (id) => {
+  const showroom = await getShowRoomById(id);
+  if (!showroom) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Showroom not found.");
+  }
+  await showroom.remove();
+  return showroom;
+};
+
 module.exports = {
   createShowRoom,
   queryShowRoom,
-  getAllShowRoom
+  getAllShowRoom,
+  deleteShowRoom
 };

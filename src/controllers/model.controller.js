@@ -14,7 +14,13 @@ const getModel = catchAsync(async (req, res) => {
   const vendor = await modelService.getModel(filter, options);
   res.status(200).send(vendor);
 });
+
+const deleteModel = catchAsync(async (req, res) => {
+  const model = await modelService.deleteModel(req.params.id);
+  res.status(httpStatus.ACCEPTED).send(model);
+});
 module.exports = {
   createModel,
   getModel,
+  deleteModel,
 };

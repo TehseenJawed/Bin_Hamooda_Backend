@@ -11,11 +11,11 @@ router
   .post(
     showroomController.createShowRoom
   )
-  // .get(categoryController.getCategories);
-// router
-//   .route("/:id")
+  .get(showroomController.getShowRoom);
+router
+  .route("/:id")
 //   .get(categoryController.getCategory)
-//   .delete(categoryController.deleteCategory)
+  .delete(showroomController.deleteShowRoom)
 //   .put(categoryController.updateCategory);
 
 module.exports = router;

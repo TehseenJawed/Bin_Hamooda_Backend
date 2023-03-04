@@ -14,7 +14,14 @@ const createShowRoom = catchAsync(async (req, res) => {
   const category = await showRoom.createShowRoom(req.body);
   res.status(httpStatus.CREATED).send(category);
 });
+
+const deleteShowRoom = catchAsync(async (req, res) => {
+  const category = await showRoom.deleteShowRoom(req.params.id);
+  res.status(httpStatus.ACCEPTED).send(category);
+});
+
 module.exports = {
   getShowRoom,
-  createShowRoom
+  createShowRoom,
+  deleteShowRoom
 };
