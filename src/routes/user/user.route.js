@@ -12,6 +12,10 @@ router
   .post(upload.single("profilePicture"), validate(userValidation.createUser), userController.createUser)
   .get(userController.getAllUser);
 
+  router
+  .route("/:id")
+  .get(userController.getUserById);
+
 router
   .route("/request-otp")
   .post(userController.verifyUserEmail);

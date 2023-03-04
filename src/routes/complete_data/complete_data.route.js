@@ -18,7 +18,7 @@ const router = Router();
 
 
 router
-  .route("/:id")
+  .route("/")
   .get(completeDataController.getCompleteData)
   // .delete(postController.deletePost)
   // .put(postController.updatePost);
