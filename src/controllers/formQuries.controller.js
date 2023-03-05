@@ -12,6 +12,14 @@ const createFormQuries = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(response);
 });
 
+const getFormQuries = catchAsync(async (req, res) => {
+  const filters = pick(req.query, ["brand", "model", "showroom", "customer"]);
+  const options = pick(req.query, ["sortBy", "limit", "page"]);
+  const result = await formQueryService.queryFormQuries(filters, options);
+  res.send(result).status(httpStatus.ACCEPTED);
+});
+
 module.exports = {
   createFormQuries,
+  getFormQuries,
 };

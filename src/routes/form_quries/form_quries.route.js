@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
   .route("/")
-  // .get(formQuriesController.getProducts)
+  .get(formQuriesController.getFormQuries)
   .post(formQuriesController.createFormQuries);
 
 // router.route("/find").get(productController.getProductCondition);

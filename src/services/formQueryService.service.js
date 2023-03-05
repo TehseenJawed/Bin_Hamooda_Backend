@@ -3,23 +3,25 @@ const { FormQuries } = require("../models");
 const { findByIdAndUpdate, create } = require("../models/user.model");
 const ApiError = require("../utils/APIError");
 const mongoose = require("mongoose");
-const queryProducts = async (
+const queryFormQuries = async (
   filter,
   options,
   populateFirst = "productCondition",
   populateSecond = null
 ) => {
-  const products = Product.paginate(
+  const form_query = FormQuries.paginate(
     filter,
     options,
-    populateFirst,
-    populateSecond
+    ["brand", "model", "showroom", "customer"]
   );
-  return products;
+  return form_query;
 };
+
 const createQuery = async (body) => {
   return FormQuries.create(body);
 };
+
 module.exports = {
   createQuery,
+  queryFormQuries,
 };
