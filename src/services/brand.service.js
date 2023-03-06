@@ -10,8 +10,7 @@ const queryBrand = async (
   const subCategory = await Brand.paginate(
     filter,
     options,
-    populateFirst,
-    populateSecond
+    ["model"]
   );
   return subCategory;
 };
@@ -22,7 +21,7 @@ const createBrand = async (body) => {
 };
 
 const getAllBrand = async () => {
-  const result = await Brand.find()
+  const result = await Brand.find().populate("models")
   return result
 }
 
@@ -56,4 +55,5 @@ module.exports = {
   getAllBrand,
   deleteBrandById,
   updateBrand,
+  getBrandById,
 };

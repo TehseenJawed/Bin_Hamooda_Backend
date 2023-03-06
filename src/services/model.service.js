@@ -28,12 +28,12 @@ const createModel = async (req) => {
  */
 
 const getModel = async (filters, options, populateFirst = null) => {
-  const vendor = await Model.paginate(filters, options, populateFirst);
+  const vendor = await Model.paginate(filters, options, ["brand"]);
   return vendor;
 };
 
 const getAllModel = async () => {
-  const user = await Model.find();
+  const user = await Model.find().populate("brand");
   return user;
 };
 

@@ -1,15 +1,18 @@
-const { modelService } = require("../services");
+const { modelService, brandService } = require("../services");
 const catchAsync = require("../utils/catchAsync");
 const httpStatus = require("http-status");
 const pick = require("../utils/pick");
 
 const createModel = catchAsync(async (req, res) => {
-  const vendor = await modelService.createModel(req);
-  res.status(httpStatus.CREATED).send(vendor);
+  const model = await modelService.createModel(req);
+  const brand = await brandService.getBrandById(req.body.brand)
+  brand.models = [...brand.models, model.id]
+  const updatedBrand = await brandService.updateBrand(req.body.brand, brand)
+  res.status(httpStatus.CREATED).send(model);
 });
 
 const getModel = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ["email", "userName", "firstName", "userId"]);
+  const filter = pick(req.query, []);
   const options = pick(req.query, ["sortby", "limit", "page"]);
   const vendor = await modelService.getModel(filter, options);
   res.status(200).send(vendor);

@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const vendorSchema = mongoose.Schema({
   name: { type: String, required: true },
+  brand: { type: mongoose.Schema.Types.ObjectId, ref:"brand" ,required: true },
   year: { type: String, },
 });
 

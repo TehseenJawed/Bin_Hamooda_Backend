@@ -5,6 +5,10 @@ const BrandSchema = mongoose.Schema(
     name: { type: String, required: true },
     address: { type: String, required: true },
     image: { type: String, required: true },
+    models: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "model"
+    }]
   },
   {
     timestamps: true,
