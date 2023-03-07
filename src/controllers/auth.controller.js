@@ -42,7 +42,7 @@ const login = catchAsync(async (req, res, next) => {
   //     );
   //   res.send({ user, tokens, deviceToken });
   // }
-  res.send({ user, tokens, product, model, brand, showroom });
+  res.status(200).send({ user, tokens, product, model, brand, showroom });
 });
 
 const signup = catchAsync(async (req, res, next) => {
