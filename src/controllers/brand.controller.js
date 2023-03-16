@@ -7,7 +7,10 @@ const getBrands = catchAsync(async (req, res) => {
   const filters = pick(req.query, ["category", "name", "type"]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await brandService.queryBrand(filters, options);
-  res.send(result).status(httpStatus.ACCEPTED);
+  res.send({
+    status: httpStatus.ACCEPTED,
+    result
+  }).status(httpStatus.ACCEPTED);
 });
 const createBrand = catchAsync(async (req, res) => {
   if (!req.file) {
@@ -15,18 +18,27 @@ const createBrand = catchAsync(async (req, res) => {
   } else {
     req.body.image = req.file.filename
     const result = await brandService.createBrand(req.body);
-    res.status(httpStatus.CREATED).send(result);
+    res.status(httpStatus.CREATED).send({
+      status: httpStatus.CREATED,
+      result
+    });
   }
 });
 
 const deleteBrand = catchAsync(async (req, res) => {
-  const brand = await brandService.deleteBrandById(req.params.id);
-  res.send(brand).status(httpStatus.ACCEPTED);;
+  const result = await brandService.deleteBrandById(req.params.id);
+  res.send({
+    status: httpStatus.ACCEPTED,
+    result
+  }).status(httpStatus.ACCEPTED);;
 });
 
 const updateBrand = catchAsync(async (req, res) => {
-  const brand = await brandService.updateBrand(req.params.id, req.body);
-  res.send(brand).status(httpStatus.CREATED);
+  const result = await brandService.updateBrand(req.params.id, req.body);
+  res.send({
+    status: httpStatus.ACCEPTED,
+    result
+  }).status(httpStatus.ACCEPTED);
 });
 
 module.exports = {

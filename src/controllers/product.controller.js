@@ -9,7 +9,10 @@ const getProducts = catchAsync(async (req, res) => {
   const filters = pick(req.query, [""]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await productService.queryProducts(filters, options);
-  res.send(result).status(httpStatus.ACCEPTED);;
+  res.send({
+    status: httpStatus.ACCEPTED,
+    result
+  }).status(httpStatus.ACCEPTED);;
 });
 // const getAllProducts = catchAsync(async (req, res) => {
 //   let product = await productService.getAllProducts();
@@ -30,13 +33,19 @@ const createProduct = catchAsync(async (req, res) => {
     req.body.images = images
     console.log(req.body);
     const result = await productService.createProduct(req.body);
-    res.send(result).status(httpStatus.CREATED);
+    res.send({
+      status: httpStatus.CREATED,
+      result
+    }).status(httpStatus.CREATED);
   }
 });
 const updateProduct = catchAsync(async (req, res) => {
   if (!req.files) {
     const result = await productService.updateProductById(req.params.id, req.body);
-    res.send(result).status(httpStatus.CREATED);
+    res.send({
+      status: httpStatus.ACCEPTED,
+      result
+    }).status(httpStatus.CREATED);
   } else {
     const images = []
     console.log(req.body.images);
@@ -44,13 +53,19 @@ const updateProduct = catchAsync(async (req, res) => {
     req.body.images = images
     console.log(req.body);
     const result = await productService.updateProductById(req.params.id, req.body);
-    res.send(result).status(httpStatus.CREATED);
+    res.send({
+      status: httpStatus.ACCEPTED,
+      result
+    }).status(httpStatus.ACCEPTED);
   }
   console.log('REQ ------>>> ',req.params.id, req.body);
 });
 const deleteProduct = catchAsync(async (req, res) => {
-  const product = await productService.deleteProductById(req.params.id);
-  res.send(product).status(httpStatus.ACCEPTED);;
+  const result = await productService.deleteProductById(req.params.id);
+  res.send({
+    status: httpStatus.ACCEPTED,
+    result
+  }).status(httpStatus.ACCEPTED);;
 });
 
 // const getProductCondition = catchAsync(async (req, res) => {

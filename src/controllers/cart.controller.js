@@ -7,12 +7,18 @@ const getCarts = catchAsync(async (req, res) => {
   const filters = pick(req.query, ["shopId", "post", "product"]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await cartService.queryCart(filters, options);
-  res.status(httpStatus.ACCEPTED).send(result);
+  res.status(httpStatus.ACCEPTED).send({
+    status: httpStatus.ACCEPTED,
+    result
+  });
 });
 
 const getCart = catchAsync(async (req, res) => {
   const result = await cartService.getCartById(req.params.id);
-  res.status(httpStatus.ACCEPTED).send(result);
+  res.status(httpStatus.ACCEPTED).send({
+    status: httpStatus.ACCEPTED,
+    result
+  });
 });
 const createCart = catchAsync(async (req, res) => {
   console.log(req.body, "<==============boudy");

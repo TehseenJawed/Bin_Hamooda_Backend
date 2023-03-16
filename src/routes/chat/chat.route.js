@@ -8,8 +8,6 @@ const router = Router();
 
 router.route("/").post(chatController.createChat).get(chatController.getChats);
 router.route("/users").get(chatController.getUsersForChat);
-router.route("/inbox").get(chatController.getUsersForInbox);
-router.route("/chat/:id").get(chatController.getChatPopulated)
 
 router
   .route("/:id")

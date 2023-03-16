@@ -42,7 +42,10 @@ const login = catchAsync(async (req, res, next) => {
   //     );
   //   res.send({ user, tokens, deviceToken });
   // }
-  res.status(200).send({ user, tokens, product, model, brand, showroom });
+  res.status(200).send({ 
+    status: httpStatus.ACCEPTED,
+    user, tokens, product, model, brand, showroom
+   });
 });
 
 const signup = catchAsync(async (req, res, next) => {
@@ -61,7 +64,10 @@ const signup = catchAsync(async (req, res, next) => {
       token: notificationToken,
       user: user.id,
     });
-    res.send({ user, tokens, deviceToken }).status(httpStatus.CREATED);;
+    res.send({
+      status: httpStatus.CREATED,
+      user, tokens, deviceToken
+    }).status(httpStatus.CREATED);;
   } else {
     deviceToken =
       await notificationTokenService.updateNotificationTokenByIdWhenLoggingIn(
@@ -71,7 +77,10 @@ const signup = catchAsync(async (req, res, next) => {
           user: user.id,
         }
       );
-    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
+    res.send({ 
+      status: httpStatus.ACCEPTED,
+      user, tokens, deviceToken
+     }).status(httpStatus.ACCEPTED);;
   }
 });
 
@@ -101,7 +110,10 @@ const loginWithGoogle = catchAsync(async (req, res) => {
       token: notificationToken,
       user: user.id,
     });
-    res.status(200).send({ user, tokens, deviceToken });
+    res.status(200).send({ 
+      status: httpStatus.ACCEPTED,
+      user, tokens, deviceToken
+     });
   } else {
     deviceToken =
       await notificationTokenService.updateNotificationTokenByIdWhenLoggingIn(
@@ -111,7 +123,10 @@ const loginWithGoogle = catchAsync(async (req, res) => {
           user: user.id,
         }
       );
-    res.status(200).send({ user, tokens, deviceToken });
+    res.status(200).send({ 
+      status: httpStatus.ACCEPTED,
+      user, tokens, deviceToken
+     });
   }
 });
 const loginWithFacebook = catchAsync(async (req, res, next) => {
@@ -130,7 +145,10 @@ const loginWithFacebook = catchAsync(async (req, res, next) => {
       token: notificationToken,
       user: user.id,
     });
-    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
+    res.send({ 
+      status: httpStatus.ACCEPTED,
+      user, tokens, deviceToken
+     }).status(httpStatus.ACCEPTED);;
   } else {
     deviceToken =
       await notificationTokenService.updateNotificationTokenByIdWhenLoggingIn(
@@ -140,7 +158,10 @@ const loginWithFacebook = catchAsync(async (req, res, next) => {
           user: user.id,
         }
       );
-    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
+    res.send({ 
+      status: httpStatus.ACCEPTED,
+      user, tokens, deviceToken
+     }).status(httpStatus.ACCEPTED);;
   }
 });
 

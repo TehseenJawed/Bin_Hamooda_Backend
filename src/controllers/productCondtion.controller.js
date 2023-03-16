@@ -17,14 +17,20 @@ const getProductCondtions = catchAsync(async (req, res) => {
     filters,
     options
   );
-  res.status(httpStatus.ACCEPTED).send(result);
+  res.status(httpStatus.ACCEPTED).send({
+    status: httpStatus.ACCEPTED,
+    result
+  });
 });
 
 const getProductCondtion = catchAsync(async (req, res) => {
   const result = await productCondtionService.getProductConditionById(
     req.params.id
   );
-  res.status(httpStatus.ACCEPTED).send(result);
+  res.status(httpStatus.ACCEPTED).send({
+    status: httpStatus.ACCEPTED,
+    result
+  });
 });
 const createProductCondtion = catchAsync(async (req, res) => {
   const data = await JSON.parse(req.body.condition);
@@ -40,20 +46,29 @@ const createProductCondtion = catchAsync(async (req, res) => {
   // req.body.image = image;
   data.image = image;
   const result = await productCondtionService.createProductCondition(data);
-  res.status(httpStatus.CREATED).send(result);
+  res.status(httpStatus.CREATED).send({
+    status: httpStatus.CREATED,
+    result
+  });
 });
 const updateProductCondtion = catchAsync(async (req, res) => {
   const result = await productCondtionService.updateProductConditionById(
     req.params.id,
     req.body
   );
-  res.status(httpStatus.ACCEPTED).send({ result: result.id });
+  res.status(httpStatus.ACCEPTED).send({ 
+    status: httpStatus.ACCEPTED,
+    result: result.id,
+   });
 });
 const deleteProductCondtion = catchAsync(async (req, res) => {
-  const product = await productCondtionService.deleteProductConditionById(
+  const result = await productCondtionService.deleteProductConditionById(
     req.params.id
   );
-  res.status(httpStatus.ACCEPTED).send(product);
+  res.status(httpStatus.ACCEPTED).send({
+    status: httpStatus.ACCEPTED,
+    result
+  });
 });
 module.exports = {
   createProductCondtion,
