@@ -9,7 +9,7 @@ const getProducts = catchAsync(async (req, res) => {
   const filters = pick(req.query, [""]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const result = await productService.queryProducts(filters, options);
-  res.send(result);
+  res.send(result).status(httpStatus.ACCEPTED);;
 });
 // const getAllProducts = catchAsync(async (req, res) => {
 //   let product = await productService.getAllProducts();
@@ -50,7 +50,7 @@ const updateProduct = catchAsync(async (req, res) => {
 });
 const deleteProduct = catchAsync(async (req, res) => {
   const product = await productService.deleteProductById(req.params.id);
-  res.send(product);
+  res.send(product).status(httpStatus.ACCEPTED);;
 });
 
 // const getProductCondition = catchAsync(async (req, res) => {

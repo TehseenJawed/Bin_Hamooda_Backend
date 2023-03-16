@@ -21,7 +21,7 @@ const createBrand = catchAsync(async (req, res) => {
 
 const deleteBrand = catchAsync(async (req, res) => {
   const brand = await brandService.deleteBrandById(req.params.id);
-  res.send(brand);
+  res.send(brand).status(httpStatus.ACCEPTED);;
 });
 
 const updateBrand = catchAsync(async (req, res) => {

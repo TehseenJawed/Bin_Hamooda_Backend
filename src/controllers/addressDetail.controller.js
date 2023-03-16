@@ -15,12 +15,12 @@ const getAddressessDetails = catchAsync(async (req, res) => {
     filters,
     options
   );
-  res.send(result);
+  res.send(result).status(httpStatus.ACCEPTED);
 });
 
 const getAddressDetail = catchAsync(async (req, res) => {
   const result = await addressDetailService.getAddressDetailById(req.params.id);
-  res.send(result);
+  res.send(result).status(httpStatus.ACCEPTED);
 });
 const createAddressDetail = catchAsync(async (req, res) => {
   const addressDetail = await addressDetailService.createAddressDetail(
@@ -33,13 +33,13 @@ const updateAddress = catchAsync(async (req, res) => {
     req.params.id,
     req.body
   );
-  res.send(result);
+  res.send(result).status(httpStatus.ACCEPTED);
 });
 const deleteAddress = catchAsync(async (req, res) => {
   const product = await addressDetailService.deleteAddressDetailsById(
     req.params.id
   );
-  res.send(product);
+  res.send(product).status(httpStatus.ACCEPTED);
 });
 module.exports = {
   getAddressDetail,

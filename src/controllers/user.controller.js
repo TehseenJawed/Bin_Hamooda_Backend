@@ -9,7 +9,7 @@ const pick = require("../utils/pick");
 const { getUser } = require("../validations/user.validation");
 
 const createUser = catchAsync(async (req, res) => {
-  console.log('REQ -------  ',req);
+  console.log('REQ -------  ',req.body);
   const user = await userService.createUser(req);
   const tokens = await tokenService.generateAuthTokens(user);
   // const deviceToken = await notificationTokenService.createNotificationToken({

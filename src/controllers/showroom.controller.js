@@ -22,7 +22,7 @@ const deleteShowRoom = catchAsync(async (req, res) => {
 
 const updateShowRoom = catchAsync(async (req, res) => {
   const result = await showRoom.updateShowRoom(req.params.id, req.body);
-  res.send(result).status(httpStatus.CREATED);
+  res.send(result).status(httpStatus.ACCEPTED);
 });
 
 module.exports = {

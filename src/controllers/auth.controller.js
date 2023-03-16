@@ -61,7 +61,7 @@ const signup = catchAsync(async (req, res, next) => {
       token: notificationToken,
       user: user.id,
     });
-    res.send({ user, tokens, deviceToken });
+    res.send({ user, tokens, deviceToken }).status(httpStatus.CREATED);;
   } else {
     deviceToken =
       await notificationTokenService.updateNotificationTokenByIdWhenLoggingIn(
@@ -71,7 +71,7 @@ const signup = catchAsync(async (req, res, next) => {
           user: user.id,
         }
       );
-    res.send({ user, tokens, deviceToken });
+    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
   }
 });
 
@@ -130,7 +130,7 @@ const loginWithFacebook = catchAsync(async (req, res, next) => {
       token: notificationToken,
       user: user.id,
     });
-    res.send({ user, tokens, deviceToken });
+    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
   } else {
     deviceToken =
       await notificationTokenService.updateNotificationTokenByIdWhenLoggingIn(
@@ -140,7 +140,7 @@ const loginWithFacebook = catchAsync(async (req, res, next) => {
           user: user.id,
         }
       );
-    res.send({ user, tokens, deviceToken });
+    res.send({ user, tokens, deviceToken }).status(httpStatus.ACCEPTED);;
   }
 });
 

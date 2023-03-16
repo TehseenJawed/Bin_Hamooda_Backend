@@ -9,7 +9,7 @@ const getCompleteData = catchAsync(async (req, res) => {
   const brand = await brandService.getAllBrand();
   const showroom = await showRoom.getAllShowRoom();
   
-  res.send({ product, model, brand, showroom });
+  res.send({ product, model, brand, showroom }).status(httpStatus.ACCEPTED);;
 });
 module.exports = {
   getCompleteData,

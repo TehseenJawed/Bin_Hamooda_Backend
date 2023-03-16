@@ -1,5 +1,4 @@
 const httpStatus = require("http-status");
-const vendorService = require("./model.service");
 const { User, Vendor, Chat } = require("../models");
 const ApiError = require("../utils/APIError");
 const mailService = require("./mail.service");
@@ -14,7 +13,7 @@ const jwt = require("jsonwebtoken");
  * @returns {Promise<User>}
  */
 const createUser = async (req) => {
-  const check = await vendorService.getVendorByEmail(req.body.email);
+  const check = await getUserByEmail(req.body.email);
   if (check) {
     throw new ApiError(httpStatus.ACCEPTED, "email already taken");
   }
