@@ -3,6 +3,7 @@ const { toJSON, paginate } = require("./plugins");
 const productSchema = mongoose.Schema({
   title: { type: String, required: true },
   demand: { type: String, required: true },
+  description: { type: String, required: true },
   engine: { type: String, required: true },
   exterior_color: { type: String, required: true },
   fuel_type: { type: String, required: true },
